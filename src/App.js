@@ -3,6 +3,7 @@ import Buttons from './components/Buttons';
 import NumberOne from './components/NumberOne';
 import NumberThree from './components/NumberThree';
 import NumberTwo from './components/NumberTwo';
+import TitleWrapper from './components/TitleWrapper';
 import { useState, useEffect } from "react";
 
 function App() {
@@ -17,33 +18,32 @@ function App() {
 
   useEffect(() => {
     if(count !== -1) {
-        const timeout = setTimeout(() => {
-            let newIsComponentsVisible = [false, false, false];
+      const timeout = setTimeout(() => {
+        let newIsComponentsVisible = [false, false, false];
 
-            if (count < isComponentsVisible.length) {
-                if(direction === 'right') {
-                    newIsComponentsVisible[count] = true;
-                } else {
-                    newIsComponentsVisible[newIsComponentsVisible.length - 1 - count] = true;
-                }
-                setIsComponentsVisible(newIsComponentsVisible);
-                setCount(count+1);
-            } else if (count === 3) {
-                setCount(-1);
-                newIsComponentsVisible = [true, true, true];
-                setIsComponentsVisible(newIsComponentsVisible);
+        if (count < isComponentsVisible.length) {
+            if(direction === 'right') {
+                newIsComponentsVisible[count] = true;
+            } else {
+                newIsComponentsVisible[newIsComponentsVisible.length - 1 - count] = true;
             }
-            
-        },1000);
+            setIsComponentsVisible(newIsComponentsVisible);
+            setCount(count+1);
+        } else if (count === 3) {
+            setCount(-1);
+            newIsComponentsVisible = [true, true, true];
+            setIsComponentsVisible(newIsComponentsVisible);
+        }     
+      },1000);
     
-        return () => clearTimeout(timeout);
+      return () => clearTimeout(timeout);
     }
   })
 
 
   const backToDefault = () => {
     if (isComponentsVisible.every((item) => item === true)) {
-        setIsComponentsVisible([false, false, false]);
+      setIsComponentsVisible([false, false, false]);
     }
 
     setCount(-1);
@@ -51,6 +51,7 @@ function App() {
 
   return (
     <div className="App">
+      <TitleWrapper></TitleWrapper>
       <Buttons showIsVisible={setComponentsVisibility} reset={backToDefault}/>
       <div>
         <NumberOne isVisible={isComponentsVisible[0]} />
